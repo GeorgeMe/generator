@@ -1,0 +1,107 @@
+package ${package}.controller.${model};
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import ${package}.entity.${className}Entity;
+import ${package}.service.${className}Service;
+import com.o2o.common.utils.PageUtils;
+import com.o2o.common.utils.Query;
+import com.o2o.common.utils.R;
+
+
+
+
+/**
+ * ${comments}
+ * 
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+@RestController
+@RequestMapping("${pathName}")
+@Api("${comments}接口")
+public class ${className}Controller {
+	@Autowired
+	private ${className}Service ${classname}Service;
+	
+	/**
+	 * 列表
+	 */
+	@RequestMapping("/list")
+	@RequiresPermissions("${model}:${pathName}:list")
+    @ApiOperation(value = "获取${comments}列表数据",notes = "获取${comments}列表数据说明")
+	public R list(@RequestParam Map<String, Object> params){
+		//查询列表数据
+        Query query = new Query(params);
+
+		List<${className}Entity> ${classname}List = ${classname}Service.queryList(query);
+		int total = ${classname}Service.queryTotal(query);
+		
+		PageUtils pageUtil = new PageUtils(${classname}List, total, query.getLimit(), query.getPage());
+		
+		return R.ok().put("page", pageUtil);
+	}
+	
+	
+	/**
+	 * 信息
+	 */
+	@RequestMapping("/info/{${pk.attrname}}")
+	@RequiresPermissions("${model}:${pathName}:info")
+    @ApiOperation(value = "获取${comments}信息",notes = "获取${comments}说明")
+	public R info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
+		${className}Entity ${classname} = ${classname}Service.queryObject(${pk.attrname});
+		
+		return R.ok().put("${classname}", ${classname});
+	}
+	
+	/**
+	 * 保存
+	 */
+	@RequestMapping("/save")
+	@RequiresPermissions("${model}:${pathName}:save")
+    @ApiOperation(value = "${comments}保存",notes = "${comments}保存说明")
+	public R save(@RequestBody ${className}Entity ${classname}){
+		${classname}Service.save(${classname});
+		
+		return R.ok();
+	}
+	
+	/**
+	 * 修改
+	 */
+	@RequestMapping("/update")
+	@RequiresPermissions("${model}:${pathName}:update")
+    @ApiOperation(value = "${comments}修改",notes = "${comments}修改说明")
+	public R update(@RequestBody ${className}Entity ${classname}){
+		${classname}Service.update(${classname});
+		
+		return R.ok();
+	}
+	
+	/**
+	 * 删除
+	 */
+	@RequestMapping("/delete")
+	@RequiresPermissions("${model}:${pathName}:delete")
+    @ApiOperation(value = "${comments}删除",notes = "${comments}删除说明")
+	public R delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
+		${classname}Service.deleteBatch(${pk.attrname}s);
+		
+		return R.ok();
+	}
+	
+}
