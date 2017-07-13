@@ -180,7 +180,7 @@ public class GenUtils {
 		}
 
 		if(template.contains("Dao.xml.vm")){
-			return  "main"+ File.separator +"resources"+File.separator+"mybatis" + File.separator+ model +File.separator+  className + "Dao.xml";
+			return  "main"+ File.separator +"resources"+File.separator+"mapper" + File.separator+ model +File.separator+  className + "Dao.xml";
 		}
 
 		if(template.contains("Service.java.vm")){
@@ -192,15 +192,15 @@ public class GenUtils {
 		}
 
 		if(template.contains("Controller.java.vm")){
-			return packagePath + "controller"+File.separator + model +File.separator+File.separator + className + "Controller.java";
+			return packagePath + model +File.separator+"controller"+File.separator + model +File.separator+File.separator + className + "Controller.java";
 		}
 
 		if(template.contains("list.html.vm")){
-			return "main" + File.separator +"views" +  File.separator + model + File.separator + className.toLowerCase() + ".html";
+			return "main" + File.separator +"views" + File.separator +"modules" +  File.separator + model + File.separator + className.toLowerCase() + ".html";
 		}
 
 		if(template.contains("list.js.vm")){
-			return "main" + File.separator +"js" + File.separator + model + File.separator + className.toLowerCase() + ".js";
+			return "main"+ File.separator +"static" + File.separator +"cms"+ File.separator +"js" + File.separator + model + File.separator + className.toLowerCase() + ".js";
 		}
 
 		if(template.contains("menu.sql.vm")){

@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import ${package}.entity.${className}Entity;
 import ${package}.service.${className}Service;
+import com.o2o.common.annotation.LogAspect;
 import com.o2o.common.utils.PageUtils;
 import com.o2o.common.utils.Query;
 import com.o2o.common.utils.R;
@@ -32,7 +33,7 @@ import com.o2o.common.utils.R;
  */
 @RestController
 @RequestMapping("${pathName}")
-@Api("${comments}接口")
+@Api(value = "${comments}接口",description = "${comments}接口")
 public class ${className}Controller {
 	@Autowired
 	private ${className}Service ${classname}Service;
@@ -40,7 +41,7 @@ public class ${className}Controller {
 	/**
 	 * 列表
 	 */
-	@RequestMapping("/list")
+	@GetMapping("/list")
 	@RequiresPermissions("${model}:${pathName}:list")
     @ApiOperation(value = "获取${comments}列表数据",notes = "获取${comments}列表数据说明")
 	public R list(@RequestParam Map<String, Object> params){
@@ -59,7 +60,7 @@ public class ${className}Controller {
 	/**
 	 * 信息
 	 */
-	@RequestMapping("/info/{${pk.attrname}}")
+	@GetMapping("/info/{${pk.attrname}}")
 	@RequiresPermissions("${model}:${pathName}:info")
     @ApiOperation(value = "获取${comments}信息",notes = "获取${comments}说明")
 	public R info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
@@ -71,7 +72,8 @@ public class ${className}Controller {
 	/**
 	 * 保存
 	 */
-	@RequestMapping("/save")
+    @LogAspect("保存${comments}")
+	@PostMapping("/save")
 	@RequiresPermissions("${model}:${pathName}:save")
     @ApiOperation(value = "${comments}保存",notes = "${comments}保存说明")
 	public R save(@RequestBody ${className}Entity ${classname}){
@@ -83,7 +85,8 @@ public class ${className}Controller {
 	/**
 	 * 修改
 	 */
-	@RequestMapping("/update")
+    @LogAspect("修改${comments}")
+	@PostMapping("/update")
 	@RequiresPermissions("${model}:${pathName}:update")
     @ApiOperation(value = "${comments}修改",notes = "${comments}修改说明")
 	public R update(@RequestBody ${className}Entity ${classname}){
@@ -95,12 +98,13 @@ public class ${className}Controller {
 	/**
 	 * 删除
 	 */
-	@RequestMapping("/delete")
+    @LogAspect("删除${comments}")
+	@PostMapping("/delete")
 	@RequiresPermissions("${model}:${pathName}:delete")
     @ApiOperation(value = "${comments}删除",notes = "${comments}删除说明")
 	public R delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
 		${classname}Service.deleteBatch(${pk.attrname}s);
-		
+
 		return R.ok();
 	}
 	
